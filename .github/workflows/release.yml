@@ -52,6 +52,22 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
+      - name: Create package.json for Terraform modules
+        run: |
+          for dir in modules/*/; do
+            if [ ! -f "${dir}package.json" ]; then
+              module_name=$(basename "$dir")
+              cat > "${dir}package.json" <<EOF
+          {
+            "name": "${module_name}",
+            "version": "0.1.0",
+            "private": true
+          }
+          EOF
+              echo "Created package.json for ${module_name}"
+            fi
+          done
+
       - name: Run Nx Release (Dry Run)
         if: ${{ inputs.dry-run }}
         run: pnpm nx release --specifier=${{ inputs.version }} --dry-run
@@ -64,7 +80,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
+      - name: Push changes and tags
         if: ${{ !inputs.dry-run }}
         run: |
           git push origin main --follow-tags

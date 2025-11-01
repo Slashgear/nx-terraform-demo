@@ -37,6 +37,9 @@ Thumbs.db
 # TFLint
 .tflint.d/
 
+# Module package.json (generated for NX release)
+modules/*/package.json
+
 
 
 .nx/cache
