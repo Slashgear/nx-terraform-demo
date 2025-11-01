@@ -19,6 +19,7 @@ resource "scaleway_iam_policy" "registry_push" {
 
   name        = "${var.registry_name}-push-policy"
   description = "Policy to allow push to ${var.registry_name} registry"
+  application_id = var.application_id
 
   rule {
     permission_set_names = ["ContainerRegistryFullAccess"]

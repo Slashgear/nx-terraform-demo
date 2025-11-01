@@ -20,3 +20,9 @@ variable "create_push_policy" {
   type        = bool
   default     = false
 }
+
+variable "application_id" {
+  description = "Create Application ID for IAM policy"
+  type        = string
+  default     = ""
+}
