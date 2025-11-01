@@ -5,6 +5,10 @@ This guide explains how to create releases for the Terraform modules in this mon
 ## Quick Start
 
 ```bash
+# For the very first release (no tags exist yet)
+pnpm run release -- --first-release
+
+# For subsequent releases:
 # Preview what would be released
 pnpm run release:dry-run
 
@@ -14,6 +18,15 @@ pnpm run release
 # Or specify the version bump type
 pnpm run release:version -- --specifier=patch
 ```
+
+## Important: Git Tags as Version Source
+
+This project uses **git tags only** for versioning. There are no `package.json` or `version.json` files in modules.
+
+- Versions are tracked via git tags: `{module-name}-v{version}`
+- Example: `scw-vpc-v1.2.3`, `scw-k8s-v0.5.1`
+- For the first release, use `--first-release` flag
+- Nx Release reads git tags to determine current versions
 
 ## Prerequisites
 
@@ -49,6 +62,10 @@ BREAKING CHANGE: Default version changed from 15 to 16"
 Run a dry-run to see what would happen without making any changes:
 
 ```bash
+# For first release (no tags exist yet)
+pnpm run release:dry-run -- --first-release
+
+# For subsequent releases
 pnpm run release:dry-run
 ```
 
@@ -63,6 +80,10 @@ This will show you:
 If the dry-run looks good, create the actual release:
 
 ```bash
+# For first release (creates initial 0.1.0 tags)
+pnpm run release -- --first-release
+
+# For subsequent releases:
 # Let Nx analyze commits and determine versions
 pnpm run release
 
@@ -73,13 +94,12 @@ pnpm run release:version -- --specifier=major   # 0.1.0 → 1.0.0
 ```
 
 This will:
-1. Analyze commits since last release
+1. Analyze commits since last release (or since repo start for `--first-release`)
 2. Determine which modules changed
-3. Calculate new version numbers
-4. Update `version.json` files
-5. Generate/update `CHANGELOG.md` files
-6. Create git commit with changes
-7. Create git tags for each released module
+3. Calculate new version numbers based on conventional commits
+4. Generate/update `CHANGELOG.md` files
+5. Create git commit with changelog changes
+6. Create git tags for each released module (e.g., `scw-vpc-v0.1.0`)
 
 ### 4. Review Changes
 
@@ -208,20 +228,20 @@ git push origin :refs/tags/scw-vpc-v1.0.0
 If you need to release manually without Nx:
 
 ```bash
-# 1. Update version.json
-echo '{"version": "1.2.3"}' > modules/scw-vpc/version.json
+# 1. Update CHANGELOG.md manually
+vim modules/scw-vpc/CHANGELOG.md
 
-# 2. Update CHANGELOG.md manually
-
-# 3. Commit changes
+# 2. Commit changes
 git add modules/scw-vpc/
 git commit -m "chore(release): publish scw-vpc v1.2.3"
 
-# 4. Create tag
+# 3. Create tag
 git tag scw-vpc-v1.2.3
 
-# 5. Push
+# 4. Push
 git push origin main --tags
+
+# 5. Create GitHub Release manually from the tag
 ```
 
 ## Best Practices

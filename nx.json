@@ -32,10 +32,6 @@
     "projectsRelationship": "independent",
     "projects": ["modules/*"],
     "version": {
-      "generatorOptions": {
-        "packageRoot": "{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      },
       "conventionalCommits": true
     },
     "changelog": {

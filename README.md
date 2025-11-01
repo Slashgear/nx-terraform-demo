@@ -375,7 +375,7 @@ This project uses [Nx Release](https://nx.dev/features/manage-releases) to manag
 - **Independent versioning**: Each module is versioned separately
 - **Semantic Versioning**: Follows [SemVer](https://semver.org/) (MAJOR.MINOR.PATCH)
 - **Conventional Commits**: Uses [Conventional Commits](https://www.conventionalcommits.org/) for changelog generation
-- **Git tags**: Each release creates a git tag (e.g., `scw-vpc-v1.2.3`)
+- **Git tags only**: Versions are tracked via git tags (e.g., `scw-vpc-v1.2.3`), no `package.json` files needed
 
 ### Commit Message Format
 
@@ -413,13 +413,20 @@ See [COMMIT_CONVENTION.md](./.github/COMMIT_CONVENTION.md) for detailed guidelin
 
 ### Release Commands
 
-**Dry run (preview changes without committing):**
+**First release (when no tags exist yet):**
 ```bash
-pnpm run release:dry-run
+# Preview the first release
+pnpm run release:dry-run -- --first-release
+
+# Create the first release (will create 0.1.0 tags)
+pnpm run release -- --first-release
 ```
 
-**Create a new release:**
+**Subsequent releases:**
 ```bash
+# Dry run (preview changes without committing)
+pnpm run release:dry-run
+
 # Let Nx determine version based on commits
 pnpm run release
 
@@ -455,6 +462,18 @@ The workflow will:
 
 ### Release Process Example
 
+**For the first release ever:**
+
+```bash
+# This creates initial tags for all modules (0.1.0)
+pnpm run release -- --first-release
+
+# Push tags
+git push origin main --follow-tags
+```
+
+**For subsequent releases:**
+
 1. **Make changes with conventional commits:**
    ```bash
    git commit -m "feat(scw-vpc): add support for custom DNS"
@@ -481,17 +500,19 @@ The workflow will:
    git push origin main --follow-tags
    ```
 
-### Version Files
+### Git Tags as Version Source
 
-Each module has a `version.json` file tracking its current version:
+This project uses **git tags only** for versioning (no `package.json` or `version.json` files in modules):
 
-```json
-{
-  "version": "1.2.3"
-}
+- Versions are stored as git tags: `{module-name}-v{version}`
+- Example: `scw-vpc-v1.2.3`, `scw-k8s-v0.5.1`
+- Nx Release reads the latest tag to determine the current version
+- This is the standard approach for Terraform modules
+
+To see all versions:
+```bash
+git tag -l
 ```
-
-Nx Release automatically updates these files during releases.
 
 ### Changelogs
 
