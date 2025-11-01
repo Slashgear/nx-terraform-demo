@@ -1,3 +1,14 @@
+## 0.1.1 (2025-11-01)
+
+### 🩹 Fixes
+
+- removed unused variable ([a779599](https://github.com/Slashgear/nx-terraform-demo/commit/a779599))
+- fix validate ([b6b66e9](https://github.com/Slashgear/nx-terraform-demo/commit/b6b66e9))
+
+### ❤️ Thank You
+
+- Antoine CARON
+
 # Changelog
 
 All notable changes to the scw-object-storage module will be documented in this file.

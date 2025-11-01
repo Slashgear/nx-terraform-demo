@@ -1,3 +1,7 @@
+## 0.1.1 (2025-11-01)
+
+This was a version bump only for scw-k8s to align it with other projects, there were no code changes.
+
 # Changelog
 
 All notable changes to the scw-k8s module will be documented in this file.

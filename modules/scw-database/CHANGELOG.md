@@ -1,3 +1,7 @@
+## 0.1.1 (2025-11-01)
+
+This was a version bump only for scw-database to align it with other projects, there were no code changes.
+
 # Changelog
 
 All notable changes to the scw-database module will be documented in this file.

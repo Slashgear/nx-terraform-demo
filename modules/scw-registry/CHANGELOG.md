@@ -1,3 +1,14 @@
+## 0.1.1 (2025-11-01)
+
+### 🩹 Fixes
+
+- fix tf fmt' ([b668f1c](https://github.com/Slashgear/nx-terraform-demo/commit/b668f1c))
+- add application id ([0554932](https://github.com/Slashgear/nx-terraform-demo/commit/0554932))
+
+### ❤️ Thank You
+
+- Antoine CARON
+
 # Changelog
 
 All notable changes to the scw-registry module will be documented in this file.
