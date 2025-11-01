@@ -15,18 +15,6 @@ variable "enable_versioning" {
   default     = false
 }
 
-variable "enable_lifecycle" {
-  description = "Enable lifecycle rules"
-  type        = bool
-  default     = false
-}
-
-variable "lifecycle_days" {
-  description = "Number of days before objects expire"
-  type        = number
-  default     = 90
-}
-
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
