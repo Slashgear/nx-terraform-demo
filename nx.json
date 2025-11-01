@@ -31,6 +31,7 @@
   "release": {
     "projectsRelationship": "independent",
     "projects": ["modules/*"],
+    "releaseTagPattern": "{projectName}-v{version}",
     "version": {
       "conventionalCommits": true
     },
