@@ -1,0 +1,54 @@
+{
+  "name": "scw-vpc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/scw-vpc",
+  "targets": {
+    "fmt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform fmt -check",
+        "cwd": "modules/scw-vpc"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt",
+          "cwd": "modules/scw-vpc"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["terraform init -backend=false", "terraform validate"],
+        "cwd": "modules/scw-vpc",
+        "parallel": false
+      },
+      "dependsOn": ["fmt"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tflint --init && tflint",
+        "cwd": "modules/scw-vpc"
+      },
+      "dependsOn": ["validate"]
+    },
+    "security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "checkov -d . --quiet --compact",
+        "cwd": "modules/scw-vpc"
+      },
+      "dependsOn": ["lint"]
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform-docs markdown table --output-file README.md --output-mode inject .",
+        "cwd": "modules/scw-vpc"
+      }
+    }
+  },
+  "tags": ["terraform", "infrastructure", "vpc"]
+}

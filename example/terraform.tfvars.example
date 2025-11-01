@@ -1,0 +1,5 @@
+# Example terraform.tfvars file
+# Copy this to terraform.tfvars and fill in your values
+
+db_password         = "your-secure-password-here"
+scaleway_project_id = "your-project-id-here"

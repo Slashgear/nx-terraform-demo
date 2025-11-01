@@ -1,0 +1,65 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "fmt": {
+      "cache": true,
+      "dependsOn": []
+    },
+    "validate": {
+      "cache": true,
+      "dependsOn": ["fmt"]
+    },
+    "lint": {
+      "cache": true,
+      "dependsOn": ["validate"]
+    },
+    "security": {
+      "cache": true,
+      "dependsOn": ["lint"]
+    },
+    "docs": {
+      "cache": true,
+      "dependsOn": []
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "terraform": ["{projectRoot}/**/*.tf", "{projectRoot}/**/*.tfvars"]
+  },
+  "plugins": [],
+  "defaultBase": "main",
+  "release": {
+    "projectsRelationship": "independent",
+    "projects": ["modules/*"],
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      },
+      "conventionalCommits": true
+    },
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github",
+        "renderOptions": {
+          "authors": true,
+          "commitReferences": true,
+          "versionTitleDate": true
+        }
+      },
+      "workspaceChangelog": {
+        "createRelease": "github",
+        "renderOptions": {
+          "authors": true,
+          "commitReferences": true,
+          "versionTitleDate": true
+        }
+      }
+    },
+    "git": {
+      "commit": true,
+      "tag": true,
+      "commitMessage": "chore(release): publish {version}"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "nx-terraform-demo",
+  "version": "1.0.0",
+  "description": "Demo project showing how to manage Terraform modules with Nx monorepo",
+  "scripts": {
+    "fmt": "nx run-many -t fmt --configuration=fix",
+    "fmt:check": "nx run-many -t fmt",
+    "validate": "nx run-many -t validate",
+    "lint": "nx run-many -t lint",
+    "security": "nx run-many -t security",
+    "docs": "nx run-many -t docs",
+    "affected:fmt": "nx affected -t fmt --configuration=fix",
+    "affected:validate": "nx affected -t validate",
+    "affected:lint": "nx affected -t lint",
+    "affected:security": "nx affected -t security",
+    "affected:all": "nx affected -t fmt validate lint security",
+    "graph": "nx graph",
+    "biome:check": "biome check .",
+    "biome:fix": "biome check --write .",
+    "biome:format": "biome format --write .",
+    "biome:lint": "biome lint .",
+    "format:all": "pnpm run biome:format && pnpm run fmt",
+    "release": "nx release",
+    "release:version": "nx release version",
+    "release:changelog": "nx release changelog",
+    "release:publish": "nx release publish",
+    "release:dry-run": "nx release --dry-run"
+  },
+  "keywords": [
+    "nx",
+    "terraform",
+    "infrastructure",
+    "monorepo",
+    "scaleway"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "nx": "22.0.2"
+  },
+  "nx": {}
+}

@@ -1,0 +1,55 @@
+{
+  "name": "scw-loadbalancer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/scw-loadbalancer",
+  "targets": {
+    "fmt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform fmt -check",
+        "cwd": "modules/scw-loadbalancer"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt",
+          "cwd": "modules/scw-loadbalancer"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["terraform init -backend=false", "terraform validate"],
+        "cwd": "modules/scw-loadbalancer",
+        "parallel": false
+      },
+      "dependsOn": ["fmt", "^validate"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tflint --init && tflint",
+        "cwd": "modules/scw-loadbalancer"
+      },
+      "dependsOn": ["validate"]
+    },
+    "security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "checkov -d . --quiet --compact",
+        "cwd": "modules/scw-loadbalancer"
+      },
+      "dependsOn": ["lint"]
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform-docs markdown table --output-file README.md --output-mode inject .",
+        "cwd": "modules/scw-loadbalancer"
+      }
+    }
+  },
+  "tags": ["terraform", "infrastructure", "loadbalancer", "networking"],
+  "implicitDependencies": ["scw-vpc", "scw-k8s"]
+}

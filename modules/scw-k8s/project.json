@@ -1,0 +1,55 @@
+{
+  "name": "scw-k8s",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/scw-k8s",
+  "targets": {
+    "fmt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform fmt -check",
+        "cwd": "modules/scw-k8s"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt",
+          "cwd": "modules/scw-k8s"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["terraform init -backend=false", "terraform validate"],
+        "cwd": "modules/scw-k8s",
+        "parallel": false
+      },
+      "dependsOn": ["fmt", "^validate"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tflint --init && tflint",
+        "cwd": "modules/scw-k8s"
+      },
+      "dependsOn": ["validate"]
+    },
+    "security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "checkov -d . --quiet --compact",
+        "cwd": "modules/scw-k8s"
+      },
+      "dependsOn": ["lint"]
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform-docs markdown table --output-file README.md --output-mode inject .",
+        "cwd": "modules/scw-k8s"
+      }
+    }
+  },
+  "tags": ["terraform", "infrastructure", "kubernetes"],
+  "implicitDependencies": ["scw-vpc"]
+}

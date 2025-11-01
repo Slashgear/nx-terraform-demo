@@ -1,0 +1,54 @@
+{
+  "name": "scw-object-storage",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "modules/scw-object-storage",
+  "targets": {
+    "fmt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform fmt -check",
+        "cwd": "modules/scw-object-storage"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt",
+          "cwd": "modules/scw-object-storage"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["terraform init -backend=false", "terraform validate"],
+        "cwd": "modules/scw-object-storage",
+        "parallel": false
+      },
+      "dependsOn": ["fmt"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tflint --init && tflint",
+        "cwd": "modules/scw-object-storage"
+      },
+      "dependsOn": ["validate"]
+    },
+    "security": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "checkov -d . --quiet --compact",
+        "cwd": "modules/scw-object-storage"
+      },
+      "dependsOn": ["lint"]
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "terraform-docs markdown table --output-file README.md --output-mode inject .",
+        "cwd": "modules/scw-object-storage"
+      }
+    }
+  },
+  "tags": ["terraform", "infrastructure", "storage"]
+}
