@@ -10,7 +10,7 @@ variable "acl" {
 }
 
 variable "enable_versioning" {
-  description = "Enable object versioning"
+  description = "Enable object versioning, may increase long-term storage base cost"
   type        = bool
   default     = false
 }
