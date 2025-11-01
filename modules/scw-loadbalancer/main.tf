@@ -13,10 +13,10 @@ resource "scaleway_lb_ip" "main" {
 }
 
 resource "scaleway_lb" "main" {
-  name        = var.lb_name
-  ip_id       = scaleway_lb_ip.main.id
-  type        = var.lb_type
-  tags        = var.tags
+  name  = var.lb_name
+  ip_id = scaleway_lb_ip.main.id
+  type  = var.lb_type
+  tags  = var.tags
 
   private_network {
     private_network_id = var.private_network_id
@@ -28,16 +28,6 @@ resource "scaleway_lb_backend" "main" {
   name             = "${var.lb_name}-backend"
   forward_protocol = var.backend_protocol
   forward_port     = var.backend_port
-  health_check_tcp {
-    port = var.backend_port
-  }
-
-  dynamic "server_ip" {
-    for_each = var.backend_ips
-    content {
-      ip = server_ip.value
-    }
-  }
 }
 
 resource "scaleway_lb_frontend" "main" {

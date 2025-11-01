@@ -25,12 +25,12 @@ resource "scaleway_cockpit_token" "main" {
   name = "${var.monitoring_name}-token"
 
   scopes {
-    query_logs      = true
-    write_logs      = true
-    query_metrics   = true
-    write_metrics   = true
-    query_traces    = true
-    write_traces    = true
+    query_logs    = true
+    write_logs    = true
+    query_metrics = true
+    write_metrics = true
+    query_traces  = true
+    write_traces  = true
   }
 }
 

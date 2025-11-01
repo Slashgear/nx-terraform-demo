@@ -37,9 +37,3 @@ variable "log_level" {
   type        = string
   default     = "info"
 }
-
-variable "retention_days" {
-  description = "Data retention in days"
-  type        = number
-  default     = 30
-}

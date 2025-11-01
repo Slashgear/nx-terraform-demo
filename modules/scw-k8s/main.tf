@@ -28,7 +28,7 @@ resource "scaleway_k8s_pool" "main" {
   min_size = var.min_nodes
   max_size = var.max_nodes
 
-  autoscaling  = var.enable_autoscaling
-  autohealing  = true
-  tags         = var.tags
+  autoscaling = var.enable_autoscaling
+  autohealing = true
+  tags        = var.tags
 }

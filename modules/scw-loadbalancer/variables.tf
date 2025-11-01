@@ -32,12 +32,6 @@ variable "frontend_port" {
   default     = 80
 }
 
-variable "backend_ips" {
-  description = "List of backend server IPs"
-  type        = list(string)
-  default     = []
-}
-
 variable "enable_ssl" {
   description = "Enable SSL/TLS with Let's Encrypt"
   type        = bool
