@@ -24,17 +24,3 @@ resource "scaleway_object_bucket_acl" "main" {
   bucket = scaleway_object_bucket.main.name
   acl    = var.acl
 }
-
-resource "scaleway_object_bucket_lifecycle_rule" "main" {
-  count  = var.enable_lifecycle ? 1 : 0
-  bucket = scaleway_object_bucket.main.name
-
-  rule {
-    id      = "expire-old-versions"
-    enabled = true
-
-    expiration {
-      days = var.lifecycle_days
-    }
-  }
-}

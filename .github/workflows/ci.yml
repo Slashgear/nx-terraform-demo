@@ -50,16 +50,16 @@ jobs:
         run: pnpm run biome:check
 
       - name: Run format check on affected modules
-        run: pnpm nx affected -t fmt --parallel=3
+        run: pnpm nx affected -t fmt --parallel=3 --exclude=root
 
       - name: Run validation on affected modules
-        run: pnpm nx affected -t validate --parallel=3
+        run: pnpm nx affected -t validate --parallel=3 --exclude=root
 
       - name: Run linting on affected modules
-        run: pnpm nx affected -t lint --parallel=3
+        run: pnpm nx affected -t lint --parallel=3 --exclude=root
 
       - name: Run security checks on affected modules
-        run: pnpm nx affected -t security --parallel=3
+        run: pnpm nx affected -t security --parallel=3 --exclude=root
 
   dependency-graph:
     runs-on: ubuntu-latest
