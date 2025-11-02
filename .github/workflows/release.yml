@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - auto
           - patch
           - minor
           - major
@@ -70,13 +71,23 @@ jobs:
 
       - name: Run Nx Release (Dry Run)
         if: ${{ inputs.dry-run }}
-        run: pnpm nx release --specifier=${{ inputs.version }} --dry-run
+        run: |
+          if [ "${{ inputs.version }}" = "auto" ]; then
+            pnpm nx release --dry-run
+          else
+            pnpm nx release --specifier=${{ inputs.version }} --dry-run
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Nx Release
         if: ${{ !inputs.dry-run }}
-        run: pnpm nx release --specifier=${{ inputs.version }}
+        run: |
+          if [ "${{ inputs.version }}" = "auto" ]; then
+            pnpm nx release
+          else
+            pnpm nx release --specifier=${{ inputs.version }}
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
