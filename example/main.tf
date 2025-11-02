@@ -39,7 +39,6 @@ module "database" {
   enable_backup      = true
 
   admin_username         = "dbadmin"
-  admin_password         = var.db_password  # Should be provided via terraform.tfvars or environment variable
   initial_database_name  = "app"
 
   tags = ["demo", "nx-terraform", "database"]
@@ -126,6 +125,12 @@ output "k8s_cluster_id" {
 output "database_endpoint" {
   description = "Database connection endpoint"
   value       = "${module.database.endpoint_ip}:${module.database.endpoint_port}"
+}
+
+output "database_password" {
+  description = "Auto-generated database admin password (retrieve with: terraform output -raw database_password)"
+  value       = module.database.admin_password
+  sensitive   = true
 }
 
 output "kubeconfig" {

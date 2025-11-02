@@ -38,12 +38,6 @@ variable "admin_username" {
   default     = "admin"
 }
 
-variable "admin_password" {
-  description = "Admin password for the database"
-  type        = string
-  sensitive   = true
-}
-
 variable "initial_database_name" {
   description = "Name of the initial database to create"
   type        = string

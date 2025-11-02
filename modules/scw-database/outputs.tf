@@ -18,6 +18,12 @@ output "database_name" {
   value       = scaleway_rdb_database.main.name
 }
 
+output "admin_password" {
+  description = "Auto-generated admin password for the database (store securely!)"
+  value       = random_password.db_password.result
+  sensitive   = true
+}
+
 output "connection_string" {
   description = "Connection string for the database (without password)"
   value       = "postgresql://${var.admin_username}@${scaleway_rdb_instance.main.endpoint_ip}:${scaleway_rdb_instance.main.endpoint_port}/${scaleway_rdb_database.main.name}"

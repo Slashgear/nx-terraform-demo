@@ -60,7 +60,6 @@ cp terraform.tfvars.example terraform.tfvars
 Edit `terraform.tfvars` and set the required values:
 
 ```hcl
-db_password         = "your-secure-password-here"
 scaleway_project_id = "your-project-id-here"
 ```
 
@@ -69,6 +68,8 @@ You can get your project ID from the Scaleway console or with:
 ```bash
 scw config get default-project-id
 ```
+
+**Note**: The database password is automatically generated using a secure random password. You don't need to provide it in the tfvars file.
 
 ### 3. Initialize Terraform
 
@@ -104,16 +105,22 @@ kubectl get nodes
 
 ### Database
 
-Get the database endpoint:
+Get the database endpoint and password:
 
 ```bash
 terraform output database_endpoint
+terraform output -raw database_password
 ```
 
-Connect using your database client:
+Connect using your database client (the password was auto-generated):
 
 ```bash
-psql "postgresql://dbadmin:<password>@<endpoint-ip>:<port>/app"
+# Get the password
+DB_PASSWORD=$(terraform output -raw database_password)
+DB_ENDPOINT=$(terraform output -raw database_endpoint)
+
+# Connect to the database
+psql "postgresql://dbadmin:${DB_PASSWORD}@${DB_ENDPOINT}/app"
 ```
 
 ### Object Storage
