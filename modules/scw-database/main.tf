@@ -1,13 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    scaleway = {
-      source  = "scaleway/scaleway"
-      version = "~> 2.0"
-    }
-  }
-}
-
 resource "scaleway_rdb_instance" "main" {
   name           = var.database_name
   node_type      = var.node_type

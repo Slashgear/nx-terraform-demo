@@ -1,13 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    scaleway = {
-      source  = "scaleway/scaleway"
-      version = "~> 2.0"
-    }
-  }
-}
-
 resource "scaleway_k8s_cluster" "main" {
   name    = var.cluster_name
   version = var.kubernetes_version

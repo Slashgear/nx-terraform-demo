@@ -1,13 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    scaleway = {
-      source  = "scaleway/scaleway"
-      version = "~> 2.0"
-    }
-  }
-}
-
 resource "scaleway_registry_namespace" "main" {
   name        = var.registry_name
   description = var.description

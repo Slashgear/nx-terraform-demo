@@ -1,21 +1,3 @@
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    scaleway = {
-      source  = "scaleway/scaleway"
-      version = "~> 2.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.0"
-    }
-  }
-}
-
 # Scaleway Cockpit (Monitoring & Observability)
 resource "scaleway_cockpit" "main" {
   project_id = var.project_id
